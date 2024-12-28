@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Navigation Menu</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background-color: #f9f9f9;
+    }
+
+    header {
+      position: relative;
+    }
+
+    #navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: transparent;
+      transition: background-color 0.3s ease, padding 0.3s ease;
+      z-index: 1000;
+    }
+
+    #navbar ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      padding: 15px 0;
+    }
+
+    #navbar ul li {
+      margin: 0 15px;
+    }
+
+    #navbar ul li a {
+      text-decoration: none;
+      color: #333;
+      font-size: 18px;
+      padding: 10px;
+      transition: color 0.3s ease;
+    }
+
+    #navbar ul li a:hover {
+      color: #ff7043;
+    }
+
+    .scrolled {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 10px 0;
+    }
+
+    main section {
+      padding: 100px 20px;
+      height: 100vh;
+    }
+
+    #home {
+      background-color: #e0f7fa;
+    }
+
+    #about {
+      background-color: #f1f8e9;
+    }
+
+    #services {
+      background-color: #fff3e0;
+    }
+
+    #contact {
+      background-color: #fce4ec;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 18px;
+      color: #555;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .fade-in {
+      animation: fadeIn 2s ease-out forwards;
+    }
+
+    .scroll-effect {
+      animation: scrollIn 1s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes scrollIn {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section-content {
+      opacity: 0;
+    }
+
+    .visible {
+      opacity: 1;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .button {
+      background-color: #ff7043;
+      color: white;
+      padding: 15px 25px;
+      border: none;
+      border-radius: 5px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #ff5722;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav id="navbar">
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="section-content">
+      <h1 class="fade-in">Welcome to Our Website</h1>
+      <p class="fade-in">This is an example page with a navigation menu that changes color when you scroll and more interactive effects on scroll and hover.</p>
+      <p class="fade-in">Scroll down to explore more about our services, company, and how you can contact us.</p>
+    </section>
+
+    <section id="about" class="section-content">
+      <h1 class="scroll-effect">About Us</h1>
+      <p class="scroll-effect">We are a passionate team dedicated to bringing you the best services possible. Our team has been in the industry for over 10 years, and our goal is to continuously improve and provide exceptional results to our clients.</p>
+      <p class="scroll-effect">Our values include integrity, innovation, and a commitment to customer satisfaction. We believe that these values drive our success and help us create long-lasting relationships with our clients.</p>
+    </section>
+
+    <section id="services" class="section-content">
+      <h1 class="scroll-effect">Our Services</h1>
+      <p class="scroll-effect">We offer a wide range of services to meet your needs, from consulting and strategy to implementation and support. Our team is skilled in various fields including technology, design, and marketing, making us a one-stop solution for your business.</p>
+      <p class="scroll-effect">Some of the services we offer include:</p>
+      <ul class="scroll-effect">
+        <li>Custom Web Development</li>
+        <li>Digital Marketing</li>
+        <li>Branding and Design</li>
+        <li>Consulting and Strategy</li>
+      </ul>
+      <button class="button scroll-effect">Learn More</button>
+    </section>
+
+    <section id="contact" class="section-content">
+      <h1 class="scroll-effect">Contact Us</h1>
+      <p class="scroll-effect">We would love to hear from you! Whether you have a question or want to discuss a potential project, feel free to reach out to us using the contact form below.</p>
+      <button class="button scroll-effect">Get In Touch</button>
+    </section>
+  </main>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    const sections = document.querySelectorAll('.section-content');
+
+    function changeNavbarOnScroll() {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    }
+
+    function checkVisibility() {
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= window.innerHeight * 0.8 && rect.bottom >= 0) {
+          section.classList.add('visible');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', () => {
+      changeNavbarOnScroll();
+      checkVisibility();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      checkVisibility();
+    });
+  </script>
+  
+</body>
+</html>
